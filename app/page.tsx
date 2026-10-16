@@ -1,11 +1,12 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useChat } from 'ai/react';
 
-export default function Chat() {
+function ChatInner() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-  id: 'my-chat',
-});
+    id: 'my-chat',
+  });
 
   return (
     <div className="flex flex-col h-screen max-w-2xl mx-auto p-4">
@@ -46,5 +47,13 @@ export default function Chat() {
         </button>
       </form>
     </div>
+  );
+}
+
+export default function Chat() {
+  return (
+    <Suspense fallback={<div className="p-4">加载中...</div>}>
+      <ChatInner />
+    </Suspense>
   );
 }
